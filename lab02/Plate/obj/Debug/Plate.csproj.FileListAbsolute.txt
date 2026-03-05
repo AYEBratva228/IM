@@ -1,0 +1,10 @@
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.csproj.AssemblyReference.cache
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.Properties.Resources.resources
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.csproj.GenerateResource.cache
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.csproj.CoreCompileInputs.cache
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.Form1.resources
+C:\Users\sasha\source\repos\Plate\Plate\bin\Debug\Plate.exe.config
+C:\Users\sasha\source\repos\Plate\Plate\bin\Debug\Plate.exe
+C:\Users\sasha\source\repos\Plate\Plate\bin\Debug\Plate.pdb
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.exe
+C:\Users\sasha\source\repos\Plate\Plate\obj\Debug\Plate.pdb
