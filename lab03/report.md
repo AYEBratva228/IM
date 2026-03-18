@@ -161,11 +161,7 @@
 
 **2) Результаты**
 
-
-
-
-
-
+<img width="709" height="694" alt="image" src="https://github.com/user-attachments/assets/ab04cfec-1dce-471b-aae7-eda8793f549a" />
 
 
 
