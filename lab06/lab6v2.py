@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from scipy.stats import chi2
+from scipy.stats import chi2, norm
 import math
 
 
@@ -39,7 +39,7 @@ class NormalDistributionSimulator:
         self.start_button = ttk.Button(input_frame, text="Start", command=self.run_simulation)
         self.start_button.grid(row=0, column=6, padx=(20, 0))
 
-        plot_frame = ttk.LabelFrame(main_frame, text="Histogram", padding="5")
+        plot_frame = ttk.LabelFrame(main_frame, text="Histogram and Density Curve", padding="5")
         plot_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
 
         self.figure, self.ax = plt.subplots(figsize=(7, 4))
@@ -141,18 +141,38 @@ class NormalDistributionSimulator:
                     chi2_message = f"Chi-squared: {chi2_stat:.3f} (insufficient degrees of freedom)"
                 self.chi_label.config(text=chi2_message)
 
+            # Очистка графика
             self.ax.clear()
-            counts, _, _ = self.ax.hist(samples, bins=self.bins, edgecolor='black', alpha=0.7, color='steelblue',
-                                        density=False)
+            
+            # Построение гистограммы (нормированной на плотность)
+            counts, bin_edges, patches = self.ax.hist(samples, bins=self.bins, edgecolor='black', 
+                                                      alpha=0.6, color='steelblue', density=True,
+                                                      label='Histogram (normalized)')
+            
+            # Построение теоретической кривой плотности нормального распределения
+            std_dev = np.sqrt(variance)
+            x_range = np.linspace(min(self.bins), max(self.bins), 1000)
+            theoretical_pdf = norm.pdf(x_range, mean, std_dev)
+            self.ax.plot(x_range, theoretical_pdf, 'r-', linewidth=2, label='Theoretical normal PDF')
+            
+            # Настройка графика
             self.ax.set_xticks(self.bins)
             self.ax.set_xlabel('Intervals')
-            self.ax.set_ylabel('Frequency')
-            self.ax.set_title(f'Histogram of Generated Samples (n={size})')
+            self.ax.set_ylabel('Density')
+            self.ax.set_title(f'Histogram and Density Curve (n={size})')
             self.ax.grid(True, alpha=0.3)
-
-            for i, (count, label) in enumerate(zip(counts, self.bin_labels)):
-                self.ax.text(self.bins[i] + 0.5, count + max(counts) * 0.02, f'{int(count)}', ha='center', fontsize=9)
-
+            self.ax.legend(loc='upper right')
+            
+            # Добавление текста с частотами
+            hist_counts, _ = np.histogram(samples, bins=self.bins)
+            max_density = max(counts) if len(counts) > 0 else 1
+            for i, (count, label) in enumerate(zip(hist_counts, self.bin_labels)):
+                if i < len(self.bins) - 1:
+                    self.ax.text(self.bins[i] + 0.5, 
+                                max_density * 0.95,
+                                f'n={int(count)}', ha='center', fontsize=8, 
+                                bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8))
+            
             self.canvas.draw()
 
         except ValueError as e:
